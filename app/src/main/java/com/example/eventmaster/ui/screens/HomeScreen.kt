@@ -18,15 +18,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventmaster.R
 import com.example.eventmaster.ui.components.TitleBadge
-import com.example.eventmaster.ui.viewmodel.EventViewModel
+import com.example.eventmaster.ui.viewmodel.CategoryViewModel
 
 @Composable
 fun HomeScreen(
-    viewModel: EventViewModel,
+    categoryViewModel: CategoryViewModel,
     onCategoryClick: (String) -> Unit,
     onAddCategoryClick: () -> Unit
 ) {
-    val categories = viewModel.categories
+    val categories = categoryViewModel.categories
 
     Scaffold(
         floatingActionButton = {

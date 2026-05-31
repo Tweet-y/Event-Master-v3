@@ -25,12 +25,12 @@ import com.example.eventmaster.ui.viewmodel.EventViewModel
 @Composable
 fun CategoryEventsScreen(
     categoryName: String,
-    viewModel: EventViewModel,
+    eventViewModel: EventViewModel,
     onBack: () -> Unit,
     onAddEventClick: (String) -> Unit,
     onEventDetailClick: (Int) -> Unit = {}
 ) {
-    val events = viewModel.getEventsByCategory(categoryName)
+    val events = eventViewModel.getEventsByCategory(categoryName)
 
     Scaffold(
         floatingActionButton = {

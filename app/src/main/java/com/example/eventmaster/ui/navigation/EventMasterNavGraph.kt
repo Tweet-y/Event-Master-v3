@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.example.eventmaster.ui.screens.*
 import com.example.eventmaster.ui.viewmodel.EventViewModel
+import com.example.eventmaster.ui.viewmodel.CategoryViewModel
 
 @Composable
 fun EventMasterNavGraph(
@@ -16,6 +17,7 @@ fun EventMasterNavGraph(
     modifier: Modifier = Modifier
 ) {
     val eventViewModel: EventViewModel = hiltViewModel()
+    val categoryViewModel: CategoryViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
@@ -24,7 +26,7 @@ fun EventMasterNavGraph(
     ) {
         composable<Screen.Home> {
             HomeScreen(
-                viewModel = eventViewModel,
+                categoryViewModel = categoryViewModel,
                 onCategoryClick = { categoryName ->
                     navController.navigate(Screen.CategoryEvents(categoryName))
                 },
@@ -38,7 +40,7 @@ fun EventMasterNavGraph(
             val route: Screen.CategoryEvents = backStackEntry.toRoute()
             CategoryEventsScreen(
                 categoryName = route.categoryName,
-                viewModel = eventViewModel,
+                eventViewModel = eventViewModel,
                 onBack = { navController.popBackStack() },
                 onAddEventClick = { selectedCategory ->
                     navController.navigate(Screen.AddEvent(selectedCategory))
@@ -51,7 +53,7 @@ fun EventMasterNavGraph(
 
         composable<Screen.AddCategory> {
             AddCategoryScreen(
-                viewModel = eventViewModel,
+                categoryViewModel = categoryViewModel,
                 onBack = { navController.popBackStack() }
             )
         }

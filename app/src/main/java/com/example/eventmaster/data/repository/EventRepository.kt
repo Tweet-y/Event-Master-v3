@@ -4,7 +4,6 @@ import com.example.eventmaster.data.local.database.EventMasterDatabase
 import com.example.eventmaster.data.local.mappers.toDomain
 import com.example.eventmaster.data.local.mappers.toEntity
 import com.example.eventmaster.data.model.Event
-import com.example.eventmaster.data.model.Category
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -12,29 +11,26 @@ import javax.inject.Singleton
 
 @Singleton
 class EventRepository @Inject constructor(private val db: EventMasterDatabase) {
-    fun getAllEvents(): Flow<List<Event>> = db.eventDao().getAll().map { list -> list.map { it.toDomain() } }
 
-    fun getEventsByCategory(categoryName: String): Flow<List<Event>> = db.eventDao().getByCategory(categoryName).map { list -> list.map { it.toDomain() } }
+    // Obtener todos los eventos
+    fun getAllEvents(): Flow<List<Event>> =
+        db.eventDao().getAll().map { list -> list.map { it.toDomain() } }
 
-    suspend fun getEventById(id: Int): Event? = db.eventDao().getById(id)?.toDomain()
+    // Obtener eventos por categoría
+    fun getEventsByCategory(categoryName: String): Flow<List<Event>> =
+        db.eventDao().getByCategory(categoryName).map { list -> list.map { it.toDomain() } }
 
+    // Obtener evento por ID
+    suspend fun getEventById(id: Int): Event? =
+        db.eventDao().getById(id)?.toDomain()
+
+    // Crear nuevo evento
     suspend fun addEvent(event: Event) {
         db.eventDao().insert(event.toEntity())
     }
 
+    // Eliminar evento
     suspend fun deleteEvent(event: Event) {
         db.eventDao().delete(event.toEntity())
     }
-
-    fun getAllCategories(): Flow<List<Category>> = db.categoryDao().getAll().map { list -> list.map { it.toDomain() } }
-
-    suspend fun addCategory(category: Category) {
-        db.categoryDao().insert(category.toEntity())
-    }
-
-    suspend fun deleteCategory(category: Category) {
-        db.categoryDao().delete(category.toEntity())
-    }
 }
-
-

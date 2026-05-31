@@ -11,11 +11,11 @@ import com.example.eventmaster.R
 import com.example.eventmaster.ui.components.BackButton
 import com.example.eventmaster.ui.components.TitleBadge
 import com.example.eventmaster.ui.components.ValidatedTextField
-import com.example.eventmaster.ui.viewmodel.EventViewModel
+import com.example.eventmaster.ui.viewmodel.CategoryViewModel
 
 @Composable
 fun AddCategoryScreen(
-    viewModel: EventViewModel,
+    categoryViewModel: CategoryViewModel,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -82,7 +82,7 @@ fun AddCategoryScreen(
                     descripcionError = !isDescripcionValid
 
                     if (isNombreValid && isDescripcionValid) {
-                        viewModel.addCategory(nombre)
+                        categoryViewModel.addCategory(nombre)
                         onBack()
                     }
                 },

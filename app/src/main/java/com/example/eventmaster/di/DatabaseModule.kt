@@ -4,6 +4,8 @@ import android.content.Context
 import com.example.eventmaster.data.local.dao.CategoryDao
 import com.example.eventmaster.data.local.dao.EventDao
 import com.example.eventmaster.data.local.database.EventMasterDatabase
+import com.example.eventmaster.data.repository.EventRepository
+import com.example.eventmaster.data.repository.CategoryRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +31,17 @@ object DatabaseModule {
     @Provides
     fun provideCategoryDao(database: EventMasterDatabase): CategoryDao {
         return database.categoryDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideEventRepository(database: EventMasterDatabase): EventRepository {
+        return EventRepository(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCategoryRepository(database: EventMasterDatabase): CategoryRepository {
+        return CategoryRepository(database)
     }
 }
