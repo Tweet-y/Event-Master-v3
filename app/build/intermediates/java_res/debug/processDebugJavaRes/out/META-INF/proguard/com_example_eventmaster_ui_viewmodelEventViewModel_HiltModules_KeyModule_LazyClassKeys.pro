@@ -1,2 +1,0 @@
--keep,allowobfuscation,allowshrinking class com.example.eventmaster.ui.viewmodel.EventViewModel
--keep,allowobfuscation,allowshrinking class com.example.eventmaster.ui.viewmodel.EventViewModel
