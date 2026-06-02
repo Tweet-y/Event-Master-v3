@@ -10,6 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.res.stringResource
+import com.example.eventmaster.R
 import com.example.eventmaster.presentation.navigation.HomeRoute
 import com.example.eventmaster.presentation.navigation.LoginRoute
 
@@ -21,6 +23,7 @@ fun LoginScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    val invalidCredentialsError = stringResource(R.string.error_invalid_credentials)
 
     Column(
         modifier = Modifier
@@ -28,14 +31,14 @@ fun LoginScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Iniciar sesión", style = MaterialTheme.typography.headlineSmall)
+        Text(text = stringResource(R.string.login_title), style = MaterialTheme.typography.headlineSmall)
 
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email") },
+            label = { Text(stringResource(R.string.email_label)) },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -44,7 +47,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
+            label = { Text(stringResource(R.string.password_label)) },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -58,11 +61,11 @@ fun LoginScreen(
                         popUpTo<LoginRoute> { inclusive = true }
                     }
                 } else {
-                    errorMessage = "Credenciales inválidas"
+                    errorMessage = invalidCredentialsError
                 }
             }
         }, modifier = Modifier.fillMaxWidth()) {
-            Text(text = "Entrar")
+            Text(text = stringResource(R.string.login_button))
         }
 
         errorMessage?.let { msg ->

@@ -15,12 +15,11 @@ class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    // Almacena un booleano nulo al inicio mientras lee el DataStore perezosamente
     val isLoggedIn: StateFlow<Boolean?> = authRepository.isLoggedIn
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = null // Estado de carga inicial mientras lee disco
+            initialValue = null // Estado de carga inicial mientras lee
         )
 
     fun login(email: String, password: String, onResult: (Boolean) -> Unit) {
