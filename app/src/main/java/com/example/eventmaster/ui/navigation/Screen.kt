@@ -7,6 +7,9 @@ sealed interface Screen {
     object Home : Screen
 
     @Serializable
+    object Login : Screen
+
+    @Serializable
     data class CategoryEvents(val categoryName: String) : Screen
 
     @Serializable

@@ -5,8 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
-import com.example.eventmaster.ui.navigation.EventMasterNavGraph
+import com.example.eventmaster.presentation.navigation.EventMasterNavigation
 import com.example.eventmaster.ui.theme.EventMasterTheme
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +25,5 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun EventMasterMainScreen() {
-    val navController = rememberNavController()
-
-    EventMasterNavGraph(navController = navController)
+    EventMasterNavigation()
 }
