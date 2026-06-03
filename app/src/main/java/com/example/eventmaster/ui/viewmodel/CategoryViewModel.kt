@@ -6,52 +6,49 @@ import androidx.lifecycle.viewModelScope
 import com.example.eventmaster.data.model.Category
 import com.example.eventmaster.data.repository.CategoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CategoryViewModel @Inject constructor(
-    private val repository: CategoryRepository
+    private val repository: CategoryRepository,
 ) : ViewModel() {
 
-    // Lista de categorías reactiva (nombres)
     val categories = mutableStateListOf<String>()
 
-    // Categoría seleccionada actual
-    var selectedCategory: String = ""
-        private set
+    private val _categoryList = mutableStateListOf<Category>()
+    val categoryList: List<Category> get() = _categoryList
 
     init {
-        // Recolectar categorías desde base de datos al inicializar
+        viewModelScope.launch {
+            repository.sincronizar()
+        }
         viewModelScope.launch {
             repository.getAllCategories().collect { list ->
                 categories.clear()
                 categories.addAll(list.map { it.nombre })
+                _categoryList.clear()
+                _categoryList.addAll(list)
             }
         }
     }
 
-    fun addCategory(name: String) {
-        if (name.isBlank()) return
+    fun addCategory(nombre: String) {
+        if (nombre.isBlank()) return
         viewModelScope.launch {
-            // Evitar duplicados por nombre
-            if (!categories.contains(name)) {
-                repository.addCategory(Category(id = 0, nombre = name, descripcion = ""))
-            }
+            repository.addCategory(nombre)
         }
     }
 
-    fun selectCategory(categoryName: String) {
-        selectedCategory = categoryName
+    fun getCategoryIdByName(nombre: String): Long {
+        return _categoryList.firstOrNull { it.nombre == nombre }?.id ?: 0L
     }
 
     fun deleteCategory(categoryName: String) {
-        if (categoryName.isNotBlank()) {
-            viewModelScope.launch {
-                val category = Category(id = 0, nombre = categoryName, descripcion = "")
-                repository.deleteCategory(category)
-            }
+        if (categoryName.isBlank()) return
+        viewModelScope.launch {
+            val category = _categoryList.firstOrNull { it.nombre == categoryName } ?: return@launch
+            repository.deleteCategory(category)
         }
     }
 }

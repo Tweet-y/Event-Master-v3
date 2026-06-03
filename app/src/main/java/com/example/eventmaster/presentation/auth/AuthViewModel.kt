@@ -12,19 +12,26 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
 
     val isLoggedIn: StateFlow<Boolean?> = authRepository.isLoggedIn
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = null // Estado de carga inicial mientras lee
+            initialValue = null,
         )
 
     fun login(email: String, password: String, onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
             val success = authRepository.login(email, password)
+            onResult(success)
+        }
+    }
+
+    fun register(name: String, email: String, password: String, onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val success = authRepository.register(name, email, password)
             onResult(success)
         }
     }
@@ -35,4 +42,3 @@ class AuthViewModel @Inject constructor(
         }
     }
 }
-

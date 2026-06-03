@@ -7,29 +7,30 @@ import com.example.eventmaster.data.model.Event
 
 fun EventEntity.toDomain(): Event = Event(
     id = this.id,
+    categoriaId = this.categoriaId,
     nombre = this.nombre,
     tipo = this.tipo,
     categoria = this.categoria,
-    fecha = this.fecha
+    fecha = this.fecha,
 )
 
 fun Event.toEntity(): EventEntity = EventEntity(
     id = this.id,
+    categoriaId = this.categoriaId,
     nombre = this.nombre,
     tipo = this.tipo,
     categoria = this.categoria,
-    fecha = this.fecha
+    fecha = this.fecha,
 )
 
 fun CategoryEntity.toDomain(): Category = Category(
     id = this.id,
     nombre = this.nombre,
-    descripcion = this.descripcion
+    icono = this.icono,
 )
 
 fun Category.toEntity(): CategoryEntity = CategoryEntity(
     id = this.id,
     nombre = this.nombre,
-    descripcion = this.descripcion
+    icono = this.icono,
 )
-

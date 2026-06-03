@@ -13,7 +13,7 @@ sealed interface Screen {
     data class CategoryEvents(val categoryName: String) : Screen
 
     @Serializable
-    data class EventDetail(val eventId: Int) : Screen
+    data class EventDetail(val eventId: Long) : Screen
 
     @Serializable
     data class AddEvent(val categoryName: String) : Screen

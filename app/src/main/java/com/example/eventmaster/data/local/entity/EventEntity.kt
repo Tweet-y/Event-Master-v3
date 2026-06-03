@@ -5,10 +5,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "events")
 data class EventEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey val id: Long = 0,
+    val categoriaId: Long = 0,
     val nombre: String,
     val tipo: String,
     val categoria: String,
-    val fecha: String
+    val fecha: String,
 )
-

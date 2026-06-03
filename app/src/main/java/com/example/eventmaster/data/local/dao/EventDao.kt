@@ -17,13 +17,17 @@ interface EventDao {
     fun getByCategory(categoryName: String): Flow<List<EventEntity>>
 
     @Query("SELECT * FROM events WHERE id = :id LIMIT 1")
-    suspend fun getById(id: Int): EventEntity?
+    suspend fun getById(id: Long): EventEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(event: EventEntity): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(vararg events: EventEntity)
+
+    @Query("DELETE FROM events")
+    suspend fun deleteAll()
+
     @Delete
     suspend fun delete(event: EventEntity)
 }
-
-

@@ -7,10 +7,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -24,7 +26,8 @@ import com.example.eventmaster.ui.viewmodel.CategoryViewModel
 fun HomeScreen(
     categoryViewModel: CategoryViewModel,
     onCategoryClick: (String) -> Unit,
-    onAddCategoryClick: () -> Unit
+    onAddCategoryClick: () -> Unit,
+    onLogout: () -> Unit = {},
 ) {
     val categories = categoryViewModel.categories
 
@@ -34,28 +37,64 @@ fun HomeScreen(
                 onClick = onAddCategoryClick,
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
-                shape = RoundedCornerShape(50)
+                shape = RoundedCornerShape(50),
             ) {
-                Icon(
-                    Icons.Default.Add,
-                    contentDescription = stringResource(R.string.add_category_desc)
-                )
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_category_desc))
             }
-        }
+        },
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            TitleBadge(text = stringResource(R.string.home_title), fontSize = 24)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                TitleBadge(text = stringResource(R.string.home_title), fontSize = 24)
+
+                // Botón de logout mejorado
+                OutlinedButton(
+                    onClick = onLogout,
+                    modifier = Modifier
+                        .height(40.dp)
+                        .padding(start = 8.dp),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = Color(0xFFFF6B6B),
+                        containerColor = Color(0xFFFF6B6B).copy(alpha = 0.1f)
+                    ),
+                    border = ButtonDefaults.outlinedButtonBorder.copy(
+                        brush = androidx.compose.foundation.BorderStroke(
+                            1.5.dp,
+                            Color(0xFFFF6B6B)
+                        ).brush
+                    ),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Icon(
+                        Icons.Default.ExitToApp,
+                        contentDescription = stringResource(R.string.logout_button),
+                        modifier = Modifier.size(18.dp),
+                        tint = Color(0xFFFF6B6B)
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        stringResource(R.string.logout_button),
+                        color = Color(0xFFFF6B6B),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+            }
 
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
                 contentDescription = stringResource(R.string.app_name),
-                modifier = Modifier.size(180.dp)
+                modifier = Modifier.size(180.dp),
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -63,20 +102,20 @@ fun HomeScreen(
             Surface(
                 color = MaterialTheme.colorScheme.primary,
                 shape = RoundedCornerShape(4.dp),
-                modifier = Modifier.padding(bottom = 24.dp)
+                modifier = Modifier.padding(bottom = 24.dp),
             ) {
                 Text(
                     text = stringResource(R.string.categories_label),
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                     color = MaterialTheme.colorScheme.onPrimary,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
                 )
             }
 
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 items(categories) { category ->
                     Button(
@@ -86,9 +125,9 @@ fun HomeScreen(
                             .height(52.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.primary,
-                            contentColor = MaterialTheme.colorScheme.onPrimary
+                            contentColor = MaterialTheme.colorScheme.onPrimary,
                         ),
-                        shape = RoundedCornerShape(8.dp)
+                        shape = RoundedCornerShape(8.dp),
                     ) {
                         Text(text = category, fontWeight = FontWeight.Medium)
                     }

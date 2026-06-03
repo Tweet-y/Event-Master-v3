@@ -37,10 +37,16 @@
     <string name="event_tipo">Tipo</string>
     <string name="select_option">Seleccionar opción</string>
 
-    <!-- Login -->
+    <!-- Login / Registro -->
     <string name="login_title">Iniciar sesión</string>
     <string name="email_label">Email</string>
-    <string name="password_label">Password</string>
+    <string name="password_label">Contraseña</string>
     <string name="login_button">Entrar</string>
     <string name="error_invalid_credentials">Credenciales inválidas</string>
+    <string name="go_to_register">¿No tienes cuenta? Regístrate</string>
+    <string name="register_title">Crear cuenta</string>
+    <string name="name_label">Nombre</string>
+    <string name="register_button">Registrarse</string>
+    <string name="go_to_login">¿Ya tienes cuenta? Inicia sesión</string>
+    <string name="logout_button">Cerrar sesión</string>
 </resources>

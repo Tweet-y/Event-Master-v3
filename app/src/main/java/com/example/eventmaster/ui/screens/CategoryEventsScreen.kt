@@ -28,7 +28,7 @@ fun CategoryEventsScreen(
     eventViewModel: EventViewModel,
     onBack: () -> Unit,
     onAddEventClick: (String) -> Unit,
-    onEventDetailClick: (Int) -> Unit = {}
+    onEventDetailClick: (Long) -> Unit = {},
 ) {
     val events = eventViewModel.getEventsByCategory(categoryName)
 
@@ -38,21 +38,18 @@ fun CategoryEventsScreen(
                 onClick = { onAddEventClick(categoryName) },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
-                shape = RoundedCornerShape(50)
+                shape = RoundedCornerShape(50),
             ) {
-                Icon(
-                    Icons.Default.Add,
-                    contentDescription = stringResource(R.string.add_event_desc)
-                )
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_event_desc))
             }
-        }
+        },
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Box(modifier = Modifier.fillMaxWidth()) {
                 Button(
@@ -61,14 +58,16 @@ fun CategoryEventsScreen(
                     shape = RoundedCornerShape(4.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
                     ),
-                    modifier = Modifier.align(Alignment.TopStart).height(36.dp)
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .height(36.dp),
                 ) {
                     Text(
                         text = stringResource(R.string.back_button),
                         fontSize = 14.sp,
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Medium,
                     )
                 }
             }
@@ -80,7 +79,7 @@ fun CategoryEventsScreen(
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
                 contentDescription = stringResource(R.string.app_name),
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(100.dp),
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -88,13 +87,10 @@ fun CategoryEventsScreen(
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 items(events) { event ->
-                    EventItem(
-                        event = event,
-                        onEventDetailClick = onEventDetailClick
-                    )
+                    EventItem(event = event, onEventDetailClick = onEventDetailClick)
                 }
             }
         }
@@ -104,25 +100,24 @@ fun CategoryEventsScreen(
 @Composable
 fun EventItem(
     event: Event,
-    onEventDetailClick: (Int) -> Unit
+    onEventDetailClick: (Long) -> Unit,
 ) {
     Surface(
         color = MaterialTheme.colorScheme.primary,
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .fillMaxWidth(0.9f)
-            .clickable { onEventDetailClick(event.id) }
+            .clickable { onEventDetailClick(event.id) },
     ) {
         Column(
-            modifier = Modifier
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = event.nombre,
                 color = MaterialTheme.colorScheme.onPrimary,
                 fontWeight = FontWeight.Bold,
-                fontSize = 18.sp
+                fontSize = 18.sp,
             )
         }
     }

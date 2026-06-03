@@ -2,6 +2,8 @@ package com.example.eventmaster.di
 
 import com.example.eventmaster.data.network.AuthApiService
 import com.example.eventmaster.data.network.AuthInterceptor
+import com.example.eventmaster.data.network.CategoriaApiService
+import com.example.eventmaster.data.network.EventoApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,8 +39,16 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthApiService(retrofit: Retrofit): AuthApiService {
-        return retrofit.create(AuthApiService::class.java)
-    }
-}
+    fun provideAuthApiService(retrofit: Retrofit): AuthApiService =
+        retrofit.create(AuthApiService::class.java)
 
+    @Provides
+    @Singleton
+    fun provideCategoriaApiService(retrofit: Retrofit): CategoriaApiService =
+        retrofit.create(CategoriaApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideEventoApiService(retrofit: Retrofit): EventoApiService =
+        retrofit.create(EventoApiService::class.java)
+}

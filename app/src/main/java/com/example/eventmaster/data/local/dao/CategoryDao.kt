@@ -16,11 +16,15 @@ interface CategoryDao {
     @Query("SELECT * FROM categories WHERE nombre = :name LIMIT 1")
     suspend fun getByName(name: String): CategoryEntity?
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(category: CategoryEntity): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(vararg categories: CategoryEntity)
+
+    @Query("DELETE FROM categories")
+    suspend fun deleteAll()
 
     @Delete
     suspend fun delete(category: CategoryEntity)
 }
-
-

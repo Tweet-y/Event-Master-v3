@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName
 data class CategoriaDto(
     @SerializedName("id") val id: Long,
     @SerializedName("nombre") val nombre: String,
-    @SerializedName("icono") val icono: String?
+    @SerializedName("icono") val icono: String? = null,
 )
 
 data class EventoDto(
     @SerializedName("id") val id: Long,
     @SerializedName("categoria_id") val categoriaId: Long,
-    @SerializedName("titulo") val titulo: String,
-    @SerializedName("descripcion") val descripcion: String,
-    @SerializedName("lugar") val lugar: String?,
-    @SerializedName("fecha_hora") val fechaHora: String // Formato MySQL YYYY-MM-DD HH:MM:SS
+    @SerializedName("nombre") val nombre: String,
+    @SerializedName("tipo") val tipo: String,
+    @SerializedName("lugar") val lugar: String? = null,
+    @SerializedName("fecha") val fecha: String,
+    @SerializedName("categoria_nombre") val categoriaNombre: String? = null,
 )
-
